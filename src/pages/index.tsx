@@ -12,11 +12,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className='w-screen h-screen antialiased bg-slate-800'>
+      <div className='w-screen h-screen antialiased bg-slate-800 flex flex-col items-center'>
         <h1 className='text-3xl text-slate-50'>
           Which NPC is cooler?
         </h1>
-        <div className='border rounded p-8 flex flex-row items-center justify-around'>
+        <div className='p-32'></div>
+        <div className='border rounded p-8 flex flex-row items-center justify-between max-w-2xl'>
           <div className='w-32 h-32 border rounded'></div>
 
           <div className='text-slate-50 text-xl'>Vs</div>
