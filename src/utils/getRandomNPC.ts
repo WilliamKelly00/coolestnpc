@@ -1,4 +1,4 @@
-const MAX_NPC_ID = 11210;
+const MAX_NPC_ID = 9800;
 
 export const getRandomNPC: (notThisID?: number) => number = (
     notThisID) => {

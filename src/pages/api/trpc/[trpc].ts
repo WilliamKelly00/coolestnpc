@@ -4,16 +4,18 @@ import { z } from 'zod';
 
 export const appRouter = trpc
   .router()
-  .query('hello', {
+  .query('get-npc-by-id', {
     input: z
       .object({
-        text: z.string().nullish(),
-      })
-      .nullish(),
-    resolve({ input }) {
-      return {
-        greeting: `hello ${input?.text ?? 'world'}`,
-      };
+        id: z.number()
+      }),
+    async resolve({ input }) {
+
+        // get first npc
+        const firstNPC = await fetch(`https://maplestory.io/api/GMS/233/npc?startAt=${input.id}&count=1`);
+        const firstNPCData = await firstNPC.json();
+
+        return firstNPCData[0];
     },
   });
 
