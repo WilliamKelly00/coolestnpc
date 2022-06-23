@@ -29,10 +29,21 @@ const Home: NextPage = () => {
     }
   }, [firstNPCData, secondNPCData]);
 
-   const vote = (selected: string) => {
-    // do something
-    setIds(() => getIDs());
-    console.log(selected);
+
+   const voteMutation = trpc.useMutation(['cast-vote']);
+
+    const vote = (selected: string) => {
+      if(npcImage && npcImage2) {
+      if(selected === npcImage) {
+        voteMutation.mutate({votedFor: npcImage, votedAgainst: npcImage2});
+        console.log("voted", npcImage);
+      }
+      else{
+        voteMutation.mutate({votedFor: npcImage2, votedAgainst: npcImage});
+      }
+      
+      setIds(() => getIDs());
+    }
    }
 
 
@@ -54,7 +65,7 @@ const Home: NextPage = () => {
           <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage}/icon`} className="w-64 h-64" />
             <h2>{npc}</h2>
-            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
+            <button onClick={() => vote(npcImage!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
               cooler
               </button>
           </div>
@@ -64,7 +75,7 @@ const Home: NextPage = () => {
           <div className='w-64 h-64 text-slate-50 display flex flex-col items-center justify-end'>
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage2}/icon`}  className="w-64 h-64" />
             <h2>{npc2}</h2>
-            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ">
+            <button onClick={() => vote(npcImage2!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ">
               cooler
               </button>
           </div>
