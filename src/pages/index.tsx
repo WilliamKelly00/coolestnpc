@@ -9,7 +9,7 @@ import { trpc } from '../utils/trpc';
 const Home: NextPage = () => {
 
 
-  const [ids, setIds] = useState(getIDs);
+  const [ids, setIds] = useState(() => getIDs());
   const [first, second] = ids;
   const [npc, setNpc] = useState(null);
   const [npc2, setNpc2] = useState(null);
@@ -36,6 +36,12 @@ const Home: NextPage = () => {
   }
   , [secondNPCData]);
 
+   const vote = (selected: string) => {
+    // do something
+    setIds(() => getIDs());
+    console.log(selected);
+   }
+
 
   return (
     <div>
@@ -50,19 +56,24 @@ const Home: NextPage = () => {
           Which NPC is cooler?
         </h1>
         <div className='p-16'></div>
-        <div className='border rounded p-8 flex flex-row items-center justify-between max-w-2xl'>
-          <div className='w-64 h-64 text-slate-50'>
+        <div className='border rounded p-11 pb-24 flex flex-row items-center justify-between max-w-2xl'>
+          <div className='w-64 h-64 text-slate-50 flex flex-col justify-center items-center' >
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage}/icon`} className="w-64 h-64" />
             <h2>{npc}</h2>
+            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded absolute bottom-64">
+              cooler
+              </button>
           </div>
 
           <div className='text-slate-50 text-xl w-64 h-64 text-center flex justify-center items-center'>Vs</div>
 
-          <div className='w-64 h-64 text-slate-50'>
+          <div className='w-64 h-64 text-slate-50 display flex flex-col justify-center items-center'>
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage2}/icon`}  className="w-64 h-64" />
             <h2>{npc2}</h2>
+            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded absolute bottom-64">
+              cooler
+              </button>
           </div>
-
         </div>
       </div>
 
