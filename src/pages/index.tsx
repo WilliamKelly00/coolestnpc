@@ -56,21 +56,21 @@ const Home: NextPage = () => {
           Which NPC is cooler?
         </h1>
         <div className='p-16'></div>
-        <div className='border rounded p-11 pb-24 flex flex-row items-center justify-between max-w-2xl'>
-          <div className='w-64 h-64 text-slate-50 flex flex-col justify-center items-center' >
+        <div className='border rounded p-24 flex flex-row items-center justify-between max-w-2xl'>
+          <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage}/icon`} className="w-64 h-64" />
             <h2>{npc}</h2>
-            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded absolute bottom-64">
+            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
               cooler
               </button>
           </div>
 
           <div className='text-slate-50 text-xl w-64 h-64 text-center flex justify-center items-center'>Vs</div>
 
-          <div className='w-64 h-64 text-slate-50 display flex flex-col justify-center items-center'>
+          <div className='w-64 h-64 text-slate-50 display flex flex-col items-center justify-end'>
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage2}/icon`}  className="w-64 h-64" />
             <h2>{npc2}</h2>
-            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded absolute bottom-64">
+            <button onClick={() => vote(npc!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ">
               cooler
               </button>
           </div>
