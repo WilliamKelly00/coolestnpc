@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
-declare global{
-    var prisma : PrismaClient;
-}
+// declare global{
+//     var prisma : PrismaClient;
+// }
 
 const prisma = new PrismaClient()
 
@@ -17,3 +17,5 @@ main()
   .finally(async () => {
     await prisma.$disconnect()
   })
+
+export default prisma;

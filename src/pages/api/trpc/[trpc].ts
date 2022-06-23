@@ -1,6 +1,7 @@
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
 import { z } from 'zod';
+import prisma from '../../../utils/prisma';
 
 export const appRouter = trpc
   .router()
@@ -17,7 +18,25 @@ export const appRouter = trpc
 
         return firstNPCData[0];
     },
-  });
+  })
+  .mutation('cast-vote', {
+    input: z.object({
+      votedFor: z.number(),
+      votedAgainst: z.number()
+    }),
+    async resolve({ input }) {
+
+      const voteInDb = await prisma.vote.create({
+        data: {
+          ...input,
+        }
+      });
+
+
+      return {success: true, vote: voteInDb};
+    },
+  })
+  ;
 
 // export type definition of API
 export type AppRouter = typeof appRouter;

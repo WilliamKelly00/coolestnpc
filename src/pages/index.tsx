@@ -33,10 +33,9 @@ const Home: NextPage = () => {
    const voteMutation = trpc.useMutation(['cast-vote']);
 
     const vote = (selected: string) => {
-      if(npcImage && npcImage2) {
+      if(!firstNPCData.isLoading && !secondNPCData.isLoading && npcImage && npcImage2) {
       if(selected === npcImage) {
         voteMutation.mutate({votedFor: npcImage, votedAgainst: npcImage2});
-        console.log("voted", npcImage);
       }
       else{
         voteMutation.mutate({votedFor: npcImage2, votedAgainst: npcImage});
