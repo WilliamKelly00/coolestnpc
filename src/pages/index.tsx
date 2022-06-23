@@ -11,30 +11,23 @@ const Home: NextPage = () => {
 
   const [ids, setIds] = useState(() => getIDs());
   const [first, second] = ids;
+  
   const [npc, setNpc] = useState(null);
   const [npc2, setNpc2] = useState(null);
   const [npcImage, setNpcImage] = useState(null);
   const [npcImage2, setNpcImage2] = useState(null);
 
-
   const firstNPCData = trpc.useQuery(['get-npc-by-id', {id: first}]);
   const secondNPCData = trpc.useQuery(['get-npc-by-id', {id: second}]);
 
   useEffect(() => {
-    if (firstNPCData.data) {
+    if (firstNPCData.data && secondNPCData.data) {
       setNpc(firstNPCData.data.name);
-      setNpcImage(firstNPCData.data.id);
-    }
-  }
-  , [firstNPCData]);
-
-  useEffect(() => {
-    if (secondNPCData.data) {
       setNpc2(secondNPCData.data.name);
+      setNpcImage(firstNPCData.data.id);
       setNpcImage2(secondNPCData.data.id);
     }
-  }
-  , [secondNPCData]);
+  }, [firstNPCData, secondNPCData]);
 
    const vote = (selected: string) => {
     // do something
@@ -57,6 +50,7 @@ const Home: NextPage = () => {
         </h1>
         <div className='p-16'></div>
         <div className='border rounded p-24 flex flex-row items-center justify-between max-w-2xl'>
+
           <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
             <img src={`https://maplestory.io/api/GMS/233/npc/${npcImage}/icon`} className="w-64 h-64" />
             <h2>{npc}</h2>
@@ -74,11 +68,14 @@ const Home: NextPage = () => {
               cooler
               </button>
           </div>
+
         </div>
       </div>
 
     </div>
   )
 }
+
+
 
 export default Home
