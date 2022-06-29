@@ -6,6 +6,7 @@
     "dev": "next dev",
     "prismaDev": "dotenv -e .env.local prisma migrate dev ",
     "prismaStudio": "dotenv -e .env.local prisma studio",
+    "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
