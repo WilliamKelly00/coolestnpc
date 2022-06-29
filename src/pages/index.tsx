@@ -59,12 +59,6 @@ const Home: NextPage = () => {
           </div>
         )}
 
-
-          {/* <NpcListing 
-          npc={firstNPC.data}
-          vote={() => vote(firstNPC.data?.id!)}
-          /> */}
-
           <div className='text-slate-50 text-xl w-64 h-64 text-center flex justify-center items-center'>Vs</div>
          
           {secondNPC.data && (
@@ -83,27 +77,5 @@ const Home: NextPage = () => {
     </div>
   )
 }
-
-const NpcListing = (props: any) => {
-  return (
-    <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
-   
-    <Image 
-    src={props.npc.spriteUrl} 
-    width={256} 
-    height={256} 
-    layout="intrinsic"
-    />
-    
-    <h2>{props.npc.name}</h2>
-    
-    <button 
-    onClick={() => props.vote()} 
-    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
-      cooler
-      </button>
-  </div>
-  );
-};
 
 export default Home
