@@ -11,12 +11,17 @@ export const appRouter = trpc
         id: z.number()
       }),
     async resolve({ input }) {
+      const npc = await prisma.npc.findFirst({
+        where: {
+          id: input.id
+        }
+      });
 
-        // get first npc
-        const firstNPC = await fetch(`https://maplestory.io/api/GMS/233/npc?startAt=${input.id}&count=1`);
-        const firstNPCData = await firstNPC.json();
+      if(!npc) {
+        throw new Error('NPC not found');
+      }
 
-        return firstNPCData[0];
+      return npc;
     },
   })
   .mutation('cast-vote', {
@@ -28,7 +33,8 @@ export const appRouter = trpc
 
       const voteInDb = await prisma.vote.create({
         data: {
-          ...input,
+          votedForId: input.votedFor,
+          votedAgainstId: input.votedAgainst
         }
       });
 

@@ -14,37 +14,24 @@ const Home: NextPage = () => {
   
   const [npc, setNpc] = useState(null);
   const [npc2, setNpc2] = useState(null);
-  const [npcImage, setNpcImage] = useState(null);
-  const [npcImage2, setNpcImage2] = useState(null);
 
-  const firstNPCData = trpc.useQuery(['get-npc-by-id', {id: first}]);
-  const secondNPCData = trpc.useQuery(['get-npc-by-id', {id: second}]);
-
-  useEffect(() => {
-    if (firstNPCData.data && secondNPCData.data) {
-      setNpc(firstNPCData.data.name);
-      setNpc2(secondNPCData.data.name);
-      setNpcImage(firstNPCData.data.id);
-      setNpcImage2(secondNPCData.data.id);
-    }
-  }, [firstNPCData, secondNPCData]);
-
+  const firstNPC = trpc.useQuery(['get-npc-by-id', {id: first}]);
+  const secondNPC = trpc.useQuery(['get-npc-by-id', {id: second}]);
 
    const voteMutation = trpc.useMutation(['cast-vote']);
 
-    const vote = (selected: string) => {
-      if(!firstNPCData.isLoading && !secondNPCData.isLoading && npcImage && npcImage2) {
-      if(selected === npcImage) {
-        voteMutation.mutate({votedFor: npcImage, votedAgainst: npcImage2});
+    const vote = (selected: number) => {
+      if(!firstNPC.isLoading && !secondNPC.isLoading) {
+      if(selected === firstNPC.data!.id) {
+        voteMutation.mutate({votedFor: firstNPC.data!.id, votedAgainst: secondNPC.data!.id});
       }
       else{
-        voteMutation.mutate({votedFor: npcImage2, votedAgainst: npcImage});
+        voteMutation.mutate({votedFor: secondNPC.data!.id, votedAgainst: firstNPC.data!.id});
       }
       
       setIds(() => getIDs());
     }
    }
-
 
   return (
     <div>
@@ -61,23 +48,34 @@ const Home: NextPage = () => {
         <div className='p-16'></div>
         <div className='border rounded p-24 flex flex-row items-center justify-between max-w-2xl'>
 
-          <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
-            <Image src={`https://maplestory.io/api/GMS/233/npc/${npcImage}/icon`} width={256} height={256} layout="intrinsic"/>
-            <h2>{npc}</h2>
-            <button onClick={() => vote(npcImage!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
+
+        {firstNPC.data && (
+         <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
+            <Image src={firstNPC.data?.spriteUrl!} width={256} height={256} layout="intrinsic"/>
+            <h2>{firstNPC.data?.name}</h2>
+            <button onClick={() => vote(firstNPC.data?.id!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
               cooler
               </button>
           </div>
+        )}
+
+
+          {/* <NpcListing 
+          npc={firstNPC.data}
+          vote={() => vote(firstNPC.data?.id!)}
+          /> */}
 
           <div className='text-slate-50 text-xl w-64 h-64 text-center flex justify-center items-center'>Vs</div>
-
+         
+          {secondNPC.data && (
           <div className='w-64 h-64 text-slate-50 display flex flex-col items-center justify-end'>
-            <Image src={`https://maplestory.io/api/GMS/233/npc/${npcImage2}/icon`}  width={256} height={256} layout="intrinsic"/>
-            <h2>{npc2}</h2>
-            <button onClick={() => vote(npcImage2!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ">
+            <Image src={secondNPC.data?.spriteUrl!}  width={256} height={256} layout="intrinsic"/>
+            <h2>{secondNPC.data?.name!}</h2>
+            <button onClick={() => vote(secondNPC.data?.id!)} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ">
               cooler
               </button>
           </div>
+          )}
 
         </div>
       </div>
@@ -86,6 +84,26 @@ const Home: NextPage = () => {
   )
 }
 
-
+const NpcListing = (props: any) => {
+  return (
+    <div className='w-64 h-64 text-slate-50 flex flex-col items-center justify-end' >
+   
+    <Image 
+    src={props.npc.spriteUrl} 
+    width={256} 
+    height={256} 
+    layout="intrinsic"
+    />
+    
+    <h2>{props.npc.name}</h2>
+    
+    <button 
+    onClick={() => props.vote()} 
+    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded  ">
+      cooler
+      </button>
+  </div>
+  );
+};
 
 export default Home
