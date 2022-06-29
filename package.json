@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prismaDev": "dotenv -e .env.local prisma migrate dev ",
+    "prismaStudio": "dotenv -e .env.local prisma studio",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
