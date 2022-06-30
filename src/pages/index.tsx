@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { getIDs } from '../utils/getRandomNPC'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { trpc } from '../utils/trpc';
+import Link from 'next/link'
 
 const Home: NextPage = () => {
 
@@ -41,10 +41,19 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className='w-screen h-screen antialiased bg-slate-800 flex flex-co justify-center items-center'>
-        <h1 className='text-3xl text-slate-50 text-center'>
+      <div className='w-screen h-screen antialiased bg-slate-800 flex flex-row justify-center items-center'>
+        <div className='text-3xl text-slate-50 text-center'>
           Which NPC is cooler?
-        </h1>
+
+        <div>
+        <Link href="/results">
+        <a className=' text-slate-300 text-xl pt-5'>
+          results
+        </a>
+        </Link>
+        </div>
+
+        </div>
         <div className='p-16'></div>
         <div className='border rounded p-24 flex flex-row items-center justify-between max-w-2xl'>
 
